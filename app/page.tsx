@@ -2,14 +2,36 @@
 
 import Head from 'next/head'
 import Link from 'next/link'
+import { useState } from 'react'
 import { Briefcase, Mail, MessageCircle, Code, Zap, Trophy, Target, Star, TrendingUp } from 'lucide-react'
 
 export default function Home() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', projectDetails: '', service: '' })
+  const [successMessage, setSuccessMessage] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+      setSuccessMessage(true)
+      setFormData({ name: '', email: '', message: '', projectDetails: '', service: '' })
+      setTimeout(() => setSuccessMessage(false), 3000) // Hide after 3 seconds
+    }, 500) // Simulate API delay
+  }
+
+  const services = [
+    { value: 'web', label: 'Web Development' },
+    { value: 'mobile', label: 'Mobile App Development' },
+    { value: 'systems', label: 'Systems Creation' },
+  ]
 
   return (
-    <div
-      className={`min-h-screen bg-gray-50 transition-colors duration-300 font-sans`}
-    >
+    <div className={`min-h-screen bg-gray-50 transition-colors duration-300 font-sans`}>
       <Head>
         <title>Ali Tarek - Tech Educator & Creator</title>
         <meta
@@ -18,7 +40,6 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
 
       {/* Creative Hero Section with Buttons and Greeting */}
       <section className="min-h-screen grid grid-cols-1 md:grid-cols-12 gap-4 items-center justify-center bg-gradient-to-br from-[#003a78] to-[#003a78]/90 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden pt-16">
@@ -67,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* Rich About Section with Numbers */}
-      <section id="about" className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section id="about" className="py-16 bg-[#f1f0ec] dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">ABOUT</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -112,8 +133,8 @@ export default function Home() {
         </div>
       </section>
 
-            {/* Articles, Series, Projects, Business Section */}
-      <section id="content-types" className="py-16 bg-gray-50 dark:bg-gray-800">
+      {/* Articles, Series, Projects, Business Section */}
+      <section id="content-types" className="py-16 bg-[#f1f0ec] dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">EXPLORE MY WORK</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -122,7 +143,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-semibold">Articles</h3>
                 <p className="mt-2 text-gray-200">Insightful tech articles to expand your knowledge.</p>
-                <Link href="/articles" className="mt-4  text-[#fed850] hover:underline flex justify-end">
+                <Link href="/articles" className="mt-4 text-[#fed850] hover:underline flex justify-end">
                   View Articles
                 </Link>
               </div>
@@ -132,7 +153,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-semibold">Series</h3>
                 <p className="mt-2 text-gray-200">In-depth series on coding and development topics.</p>
-                <Link href="/series" className="mt-4  text-[#fed850] hover:underline flex justify-end">
+                <Link href="/series" className="mt-4 text-[#fed850] hover:underline flex justify-end">
                   View Series
                 </Link>
               </div>
@@ -142,7 +163,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-semibold">Projects</h3>
                 <p className="mt-2 text-gray-200">Showcasing my latest coding projects.</p>
-                <Link href="/projects" className="mt-4  text-[#fed850] hover:underline flex justify-end">
+                <Link href="/projects" className="mt-4 text-[#fed850] hover:underline flex justify-end">
                   View Projects
                 </Link>
               </div>
@@ -152,7 +173,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-semibold">Business</h3>
                 <p className="mt-2 text-gray-200">Business solutions and consulting services.</p>
-                <Link href="/business" className="mt-4  text-[#fed850] hover:underline flex justify-end">
+                <Link href="/business" className="mt-4 text-[#fed850] hover:underline flex justify-end">
                   Learn More
                 </Link>
               </div>
@@ -162,7 +183,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section with Creative Design */}
-      <section id="projects" className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="projects" className="py-16 bg-[#f1f0ec] dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">PROJECTS</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -207,7 +228,7 @@ export default function Home() {
       </section>
 
       {/* Education Section with Creative Design */}
-      <section id="education" className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section id="education" className="py-16 bg-[#f1f0ec] dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">EDUCATION</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -333,14 +354,13 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* Technologies Section */}
-      <section id="technologies" className="py-16 bg-white dark:bg-gray-900">
+      <section id="technologies" className="py-16 bg-[#f1f0ec] dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">TECHNOLOGIES I USE</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {['JavaScript', 'Python', 'TypeScript', 'React', 'Node.js', 'Next.js', 'Tailwind CSS', 'Git', 'Docker', 'AWS', 'MongoDB', 'GraphQL'].map((tech) => (
-              <div key={tech} className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-center hover:bg-[#fed850] hover:text-[#003a78] transition-colors">
+              <div key={tech} className="p-4 bg-white dark:bg-gray-800 rounded-lg text-center hover:bg-[#fed850] hover:text-[#003a78] transition-colors">
                 <span className="text-lg font-medium">{tech}</span>
               </div>
             ))}
@@ -349,7 +369,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section id="services" className="py-16 bg-[#f1f0ec] dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">SERVICES I PROVIDE</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -372,9 +392,8 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* Contact Section with WhatsApp, Social Media, and Contact Form */}
-      <section id="contact" className="py-16 bg-white dark:bg-gray-900">
+      <section id="contact" className="py-16 bg-[#f1f0ec] dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center">
             <Mail className="mr-2 text-[#003a78]" /> CONTACT
@@ -415,24 +434,56 @@ export default function Home() {
               </Link>
             </p>
           </div>
-          <form className="max-w-lg mx-auto space-y-4">
+          <form onSubmit={handleSubmit} className="max-w-lg mx-auto space-y-4">
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Your Name"
-              className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg"
+              className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg"
             />
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Your Email"
-              className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg"
+              className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg"
             />
+            <div className="relative">
+              <select
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
+                className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg appearance-none pr-10 focus:outline-none"
+              >
+                <option value="">Select a Service</option>
+                {services.map((service) => (
+                  <option key={service.value} value={service.value}>
+                    {service.label}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                </svg>
+              </div>
+            </div>
             <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               placeholder="Your Message"
-              className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg h-24"
+              className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg h-24"
             ></textarea>
             <textarea
+              name="projectDetails"
+              value={formData.projectDetails}
+              onChange={handleChange}
               placeholder="Project Details"
-              className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg h-48"
+              className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg h-48"
             ></textarea>
             <button
               type="submit"
@@ -440,11 +491,14 @@ export default function Home() {
             >
               Submit Project
             </button>
+            {successMessage && (
+              <div className="mt-4 p-4 bg-green-200 dark:bg-green-900 text-green-800 font-semibold dark:text-green-200 rounded-lg text-center animate-fade-in">
+                Thank you! Your message has been sent successfully.
+              </div>
+            )}
           </form>
         </div>
       </section>
-
-      
     </div>
   )
 }

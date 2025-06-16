@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright Section */}
-        <div className="text-center pt-6 border-t border-gray-700">
+        <div className="text-center pt-6 border-t border-gray-400">
           <p className="text-gray-300">
             © {new Date().getFullYear()} Ali Tarek. All rights reserved.
           </p>
