@@ -31,7 +31,7 @@ export default function Home() {
   ]
 
   return (
-    <div className={`min-h-screen bg-gray-50 transition-colors duration-300 font-sans`}>
+    <div className={`min-h-screen  transition-colors duration-300 font-sans`}>
       <Head>
         <title>Ali Tarek - Tech Educator & Creator</title>
         <meta
