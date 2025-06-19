@@ -3,7 +3,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Briefcase, Mail, MessageCircle, Code, Zap, Trophy, Target, Star, TrendingUp } from 'lucide-react'
+import { Briefcase, Mail, MessageCircle, Code, Zap, Trophy, Target, Star, TrendingUp, Lightbulb, Users, Puzzle, GraduationCap, ClipboardIcon } from 'lucide-react'
+import Select from '@/components/ui/select'
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', projectDetails: '', service: '' })
@@ -42,7 +43,7 @@ export default function Home() {
       </Head>
 
       {/* Creative Hero Section with Buttons and Greeting */}
-      <section className="min-h-screen grid grid-cols-1 md:grid-cols-12 gap-4 items-center justify-center bg-gradient-to-br from-[#003a78] to-[#003a78]/90 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden pt-16">
+      <section className="min-h-screen grid grid-cols-1 md:grid-cols-12 gap-4 items-center justify-center bg-gradient-to-br from-[#003a78] to-[#003a78]/90 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden pt-24 pb-16">
         <div className="col-span-1 md:col-span-6 text-center max-w-4xl mx-auto px-4 relative z-10">
           <h2 className="text-2xl md:text-3xl font-semibold text-white dark:text-blue-400 mb-4 animate-fade-in">
             Hello, I am Ali, Software Engineer
@@ -51,7 +52,7 @@ export default function Home() {
             I TEACH CODE.
             <br />I BUILD THINGS.
           </h1>
-          <div className="mt-6 flex justify-center space-x-4">
+          <div className="mt-6 flex justify-center gap-4 flex-wrap">
             <Link
               href="#contact"
               className="px-6 py-2 bg-white text-[#003a78] font-semibold rounded-lg hover:bg-gray-200 transition"
@@ -279,7 +280,10 @@ export default function Home() {
                     { name: 'JavaScript', level: 95 },
                     { name: 'Python', level: 90 },
                     { name: 'TypeScript', level: 88 },
-                    { name: 'Java', level: 85 },
+                    { name: 'C++', level: 80 },
+                    { name: 'Go Lang', level: 75 },
+                    { name: 'Rust', level: 70 },
+                    { name: 'Kotlin', level: 65 },
                   ].map((skill) => (
                     <div key={skill.name} className="space-y-2">
                       <div className="flex justify-between items-center">
@@ -332,18 +336,18 @@ export default function Home() {
                 </div>
                 <div className="space-y-4">
                   {[
-                    { skill: 'Mentoring & Teaching', icon: '🎓' },
-                    { skill: 'Problem-Solving', icon: '🧩' },
-                    { skill: 'Team Leadership', icon: '👥' },
-                    { skill: 'Communication', icon: '💬' },
-                    { skill: 'Project Management', icon: '📋' },
-                    { skill: 'Innovation', icon: '💡' },
+                    { skill: 'Mentoring & Teaching', icon: GraduationCap },
+                    { skill: 'Problem-Solving', icon: Puzzle },
+                    { skill: 'Team Leadership', icon: Users },
+                    { skill: 'Communication', icon: MessageCircle },
+                    { skill: 'Project Management', icon: ClipboardIcon },
+                    { skill: 'Innovation', icon: Lightbulb },
                   ].map((item) => (
                     <div
                       key={item.skill}
                       className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
                     >
-                      <span className="text-2xl">{item.icon}</span>
+                      <item.icon size={24} className="text-[#fed850]" />
                       <span className="text-white font-medium">{item.skill}</span>
                     </div>
                   ))}
@@ -452,19 +456,19 @@ export default function Home() {
               className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg"
             />
             <div className="relative">
-              <select
-                name="service"
+              <Select
                 value={formData.service}
-                onChange={handleChange}
-                className="w-full bg-white p-2 border border-gray-200 dark:border-gray-700 rounded-lg appearance-none pr-10 focus:outline-none"
-              >
-                <option value="">Select a Service</option>
-                {services.map((service) => (
-                  <option key={service.value} value={service.value}>
-                    {service.label}
-                  </option>
-                ))}
-              </select>
+                onChange={(e) => {
+                  setFormData((prev) => {
+                    return {
+                      ...prev,
+                      service: e
+                    }
+                  })
+                }}
+                options={services}
+              />
+                
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />

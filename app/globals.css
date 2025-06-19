@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #0f2bff;
+  --primary: #003a78;
+  --secondary: #003a78;
 }
 
 @theme {
-  --color-primary: --var(--primary);
+  --color-primary: var(--primary);
 
   --animate-fade-in: fadeIn 1s ease-out;
   --animate-slide-up: slideUp 1s ease-out;
