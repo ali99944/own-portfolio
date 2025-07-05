@@ -152,7 +152,7 @@ export default function DataTable<T extends Record<string, any>>({
             {currentData.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
-                className={`hover:bg-[#f1f0ec] transition-colors ${
+                className={`hover:bg-gray-100 transition-colors ${
                   onRowClick ? "cursor-pointer" : ""
                 }`}
                 onClick={() => onRowClick?.(row, startIndex + rowIndex)}

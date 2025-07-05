@@ -4,12 +4,12 @@ import { usePathname } from "next/navigation"
 import { LayoutDashboard, FileText, Briefcase, Users, MessageCircle, Settings, User, LogOut } from "lucide-react"
 
 const navigation = [
-  { name: "Dashboard", href: "/control-panel", icon: LayoutDashboard },
-  { name: "Articles", href: "/control-panel/articles", icon: FileText },
-  { name: "Projects", href: "/control-panel/projects", icon: Briefcase },
-  { name: "Users", href: "/control-panel/users", icon: Users },
-  { name: "Messages", href: "/control-panel/messages", icon: MessageCircle },
-  { name: "Settings", href: "/control-panel/settings", icon: Settings },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Articles", href: "/dashboard/articles", icon: FileText },
+  { name: "Projects", href: "/dashboard/projects", icon: Briefcase },
+  { name: "Clients", href: "/dashboard/clients", icon: Users },
+  { name: "Messages", href: "/dashboard/messages", icon: MessageCircle },
+  { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
 
 interface SidebarProps {

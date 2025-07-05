@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Briefcase, Mail, MessageCircle, Code, Zap, Trophy, Target, Star, TrendingUp, Lightbulb, Users, Puzzle, GraduationCap, ClipboardIcon } from 'lucide-react'
-import Select from '@/components/ui/select'
+import {Select} from '@/components/ui/select'
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', projectDetails: '', service: '' })

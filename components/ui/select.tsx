@@ -1,31 +1,43 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef, useEffect } from "react"
+import { ChevronDown, Check } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-interface Option {
-  value: string
-  label: string
+export interface SelectOption {
+value: string
+label: string
+disabled?: boolean
 }
 
-interface SelectProps {
-  options: Option[]
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  className?: string
-  disabled?: boolean
+export interface SelectProps {
+options: SelectOption[]
+value?: string
+defaultValue?: string
+placeholder?: string
+disabled?: boolean
+error?: string
+label?: string
+className?: string
+onChange?: (value: string) => void
 }
 
-export default function Select({ options, value, onChange, placeholder = 'Select an option', className, disabled }: SelectProps) {
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(
+(
+  { options, value, defaultValue, placeholder = "Select an option", disabled, error, label, className, onChange },
+  ref,
+) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [selectedValue, setSelectedValue] = useState(value || defaultValue || "")
   const selectRef = useRef<HTMLDivElement>(null)
 
-  const selectedOption = options.find((option) => option.value === value) || { value: '', label: placeholder }
-  const handleToggle = () => !disabled && setIsOpen(!isOpen)
-  const handleSelect = (optionValue: string) => {
-    onChange(optionValue)
-    setIsOpen(false)
-  }
+  const selectedOption = options.find((option) => option.value === selectedValue)
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedValue(value)
+    }
+  }, [value])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,39 +45,66 @@ export default function Select({ options, value, onChange, placeholder = 'Select
         setIsOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  const handleSelect = (optionValue: string) => {
+    setSelectedValue(optionValue)
+    setIsOpen(false)
+    onChange?.(optionValue)
+  }
+
   return (
-    <div className={`relative ${className || ''}`} ref={selectRef}>
-      <div
-        className="w-full bg-white dark:bg-gray-800 p-2 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white cursor-pointer flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200  disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={handleToggle}
-        // disabled={disabled}`
-      >
-        <span className="truncate">{selectedOption.label}</span>
-        {/* <svg
-          className={`fill-current h-4 w-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
+    <div className={cn("w-full", className)} ref={ref}>
+      {label && <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>}
+      <div className="relative" ref={selectRef}>
+        <button
+          type="button"
+          onClick={() => !disabled && setIsOpen(!isOpen)}
+          disabled={disabled}
+          className={cn(
+            "flex w-full items-center justify-between rounded-lg border bg-white px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            error
+              ? "border-red-500 focus-visible:ring-red-500"
+              : "border-gray-300 focus-visible:ring-[#003a78] focus-visible:border-[#003a78]",
+          )}
         >
-          <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-        </svg> */}
-      </div>
-      {isOpen && (
-        <div className="absolute w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg z-10 shadow-sm">
-          {options.map((option) => (
-            <div
-              key={option.value}
-              className="p-2 hover:bg-[#fed850] hover:text-[#003a78] cursor-pointer transition-colors duration-200 text-start"
-              onClick={() => handleSelect(option.value)}
-            >
-              {option.label}
+          <span className={cn(selectedOption ? "text-gray-900" : "text-gray-500")}>
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
+          <ChevronDown className={cn("h-4 w-4 text-gray-400 transition-transform", isOpen && "rotate-180")} />
+        </button>
+
+        {isOpen && (
+          <div className="absolute z-50 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-md">
+            <div className="max-h-60 overflow-auto py-1">
+              {options.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => !option.disabled && handleSelect(option.value)}
+                  disabled={option.disabled}
+                  className={cn(
+                    "flex w-full items-center justify-between px-3 py-2 text-sm transition-colors",
+                    option.disabled ? "cursor-not-allowed text-gray-400" : "hover:bg-[#f1f0ec] text-gray-900",
+                    selectedValue === option.value && "bg-[#003a78] text-white hover:bg-[#003a78]",
+                  )}
+                >
+                  <span>{option.label}</span>
+                  {selectedValue === option.value && <Check className="h-4 w-4" />}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   )
-}
+},
+)
+Select.displayName = "Select"
+
+export { Select }
